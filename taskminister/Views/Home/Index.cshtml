@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<head>
+    <link rel="stylesheet" href="~/Content/css/home/home.css" />
+</head>
+
+<body>
+
+    <div class="title-view-bg">home</div>
+
+    @section Scripts{
+        <script src="~/Content/js/home/home.js"></script>
+    }
+    <div class="infoBox">
+        IP Public: <span class="infoData" id="infoIp"></span><br>
+        Browser: <span class="infoData" id="infoBrowser"></span><br>
+        System: <span class="infoData" id="infoSystem"></span><br>
+        Resolution: <span class="infoData" id="infoScreen"></span><br>
+
+        Cookie enabled: <span class="infoData" id="infoCookie"></span><br>
+        @* OnLine: <span class="infoData" id="infoOnline"></span><br> *@
+        Mobile: <span class="infoData" id="infoMobile"></span>
+    </div>
+
+
+</body>
