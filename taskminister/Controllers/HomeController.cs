@@ -26,5 +26,12 @@ namespace taskminister.Controllers
 
             return View();
         }
+
+        public ActionResult Tarefa()
+        {
+            //taskagoraOne();
+
+            return View();
+        }
     }
 }

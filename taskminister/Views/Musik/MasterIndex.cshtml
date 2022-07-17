@@ -1,21 +1,16 @@
 ﻿
-@{
-    ViewBag.Title = "MasterIndex";
-}
-
 <head>
-    @*<link rel="stylesheet" href="~/Content/css/musik/playlist.css" />*@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.css">
     <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.js"></script>
-    <script src="~/Content/js/musik/playlist.js"></script>
-</head>
 
+    @Styles.Render("~/stylemusik")
+
+</head>
 
 @* FIX:
     - remove delay upload
     - get playlist info btn: disable on click OR clear table on click
     - Clear div status quando finalizar upload *@
-
 
 <body>
 
@@ -50,140 +45,89 @@
         </div>
         <input type="text" class="form-musik-main musik-margin" id="AddName">
         <input type="text" class="form-musik-main musik-margin" id="AddArtist">
-        <input type="file" class="upFile" id="files" />
-        <input type="button" class="upFileSend" id="btnUploadZ" value="upload musik" onclick="uploadFiles('files');" />
+        <input type="file" class="upFile" id="AddFile" />
+        <input type="button" class="upFileSend" id="btnUploadZ" value="upload musik" onclick="uploadFiles('AddFile');" />
     </div>
-
-    <br />
-
-    <div id="status"></div>
-    <br />
-    <div id="finalizada"></div>
-    <br />
-    <div id="cancelada"></div>
-
-    <br /> <br />
-    <h2>Upload usar esse</h2>
-    @using (Html.BeginForm("UploadMusik", "Musik", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div>
-            @Html.TextBox("file", "", new { type = "file" }) <br />
-            <input type="submit" value="Upload" />
-            @ViewBag.Message
-        </div>
-    }
-    <br /> <br />
-
-    @section Scripts{
-        <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
-        <script src="~/signalr/hubs"></script>
-        <script type="text/javascript">
-
-            $(function () {
-
-                var chat = $.connection.musikHub;
-
-                chat.client.progresso = function (numero) {
-                    mostraValor(numero);
-                };
-
-                chat.client.finalizada = function () {
-                    msgEnd();
-                };
-
-                chat.client.cancelada = function () {
-                    msgCancel();
-                };
-
-                $.connection.hub.start().done(function () {
-                    chat.server.musikUpload();
-                });
-
-                function mostraValor(value) {
-                    $('#status').html('Progresso: ' + value + ' %');
-                };
-
-                function msgEnd() {
-                    $('#finalizada').html('Tarefa finalizada');
-                };
-
-                function msgCancel() {
-                    $('#cancelada').html('Tarefa cancelada');
-                };
-            });
-
-
-            //  PENDENTE
-            function Playlist() {
-                $.ajax({
-                    type: "POST",
-                    url: "/Musik/GetPlaylist",
-                    //url: "/Musik/SQLPlaylist",
-                    //async: true,
-                    success: function (data) {
-                        const app = new APlayer({
-                            container: document.getElementById('aplayer2'),
-                            autoplay: true,
-                            volume: 0.3,
-                            mutex: true,
-                            audio: data,
-                        });
-                    }
-                });
-
-            };
-            //Playlist();
-
-            function PlaylistInfo() {
-                $.ajax({
-                    type: "GET",
-                    url: "/Musik/GetPlaylistInfo",
-                    //data: { get_param: 'value' },
-                    //dataType: 'json',
-                    success: function (data) {
-                        var parsedData = JSON.parse(data);
-                        console.log(parsedData);
-
-                        $('#getInfoBtn').prop('disabled', 'true');
-                        $('#getInfoBtn').unbind('click');
-
-                        $('#playlistInfo-box').css('visibility', 'visible');
-
-                        $.each(parsedData, function (index, element) {
-
-                            //console.log(element.name);
-
-                            var markup = "<tr>" +
-                                "<td>" + element.Name + "</td><td>" + element.Artist + "</td>" +
-                                "<td><a href='javascript:PlaylistRemove(" + element.Control + ");'>X</a></td>" +
-                                "</tr>";
-                            $('#playlistInfo tbody').append(markup);
-                        });
-                    }
-                });
-            };
-
-                                                    // PENDENTE
-                                                    //function PlaylistRemove(id) {
-                                                    //    $.ajax({
-                                                    //        type: "POST",
-                                                    //        url: "/Musik/PlaylistRemove",
-                                                    //        data: { id: id },
-                                                    //        success: function (data) {
-                                                    //            //console.log(data.ajax);
-                                                    //            var yeOkey = "A música com o ID " + id + " foi removida!";
-                                                    //            var noOkey = "Nenhuma música foi removida!";
-                                                    //            if (data.jax != "0") { $('#resultRemove').html(yeOkey); }
-                                                    //            else { $('#resultRemove').html(noOkey); }
-                                                    //        }
-                                                    //    });
-                                                    //};
-
-        </script>
-    }
 
     <div class="upLogBox">
         <textarea class="upLog" id="logUpload" rows="10" readonly></textarea>
     </div>
+
+
+    @section Scripts{
+        <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+        <script src="~/signalr/hubs"></script>
+        <script src="~/Content/js/musik/signalR.js"></script>
+        <script>
+
+                //  PENDENTE
+                //function Playlist() {
+                //    $.ajax({
+                //        type: "POST",
+                //        url: "/Musik/GetPlaylist",
+                //        //url: "/Musik/SQLPlaylist",
+                //        //async: true,
+                //        success: function (data) {
+                //            const app = new APlayer({
+                //                container: document.getElementById('aplayer2'),
+                //                autoplay: true,
+                //                volume: 0.3,
+                //                mutex: true,
+                //                audio: data,
+                //            });
+                //        }
+                //    });
+                //};
+                //Playlist();
+
+                //function PlaylistInfo() {
+                //    $.ajax({
+                //        type: "GET",
+                //        url: "/Musik/GetPlaylistInfo",
+                //        //data: { get_param: 'value' },
+                //        //dataType: 'json',
+                //        success: function (data) {
+                //            var parsedData = JSON.parse(data);
+                //            console.log(parsedData);
+
+                //            $('#getInfoBtn').prop('disabled', 'true');
+                //            $('#getInfoBtn').unbind('click');
+
+                //            $('#playlistInfo-box').css('visibility', 'visible');
+
+                //            $.each(parsedData, function (index, element) {
+
+                //                //console.log(element.name);
+
+                //                var markup = "<tr>" +
+                //                    "<td>" + element.Name + "</td><td>" + element.Artist + "</td>" +
+                //                    "<td><a href='javascript:PlaylistRemove(" + element.Control + ");'>X</a></td>" +
+                //                    "</tr>";
+                //                $('#playlistInfo tbody').append(markup);
+                //            });
+                //        }
+                //    });
+                //};
+
+                // PENDENTE
+                //function PlaylistRemove(id) {
+                //    $.ajax({
+                //        type: "POST",
+                //        url: "/Musik/PlaylistRemove",
+                //        data: { id: id },
+                //        success: function (data) {
+                //            //console.log(data.ajax);
+                //            var yeOkey = "A música com o ID " + id + " foi removida!";
+                //            var noOkey = "Nenhuma música foi removida!";
+                //            if (data.jax != "0") { $('#resultRemove').html(yeOkey); }
+                //            else { $('#resultRemove').html(noOkey); }
+                //        }
+                //    });
+                //};
+
+        </script>
+    }
+
+    @Scripts.Render("~/scriptmusik")
 
 </body>

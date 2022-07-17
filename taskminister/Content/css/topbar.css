@@ -1,0 +1,22 @@
+﻿.taskminister-bar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background-color: lightgreen;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    margin-bottom: 15px;
+
+
+    /*border-width: 0 0 1px;*/
+}
+
+.tmbar-links {
+
+    padding-right: 20px;
+    padding-left: 20px;
+    
+}
+

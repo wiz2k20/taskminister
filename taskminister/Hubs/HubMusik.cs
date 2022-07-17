@@ -1,48 +1,29 @@
 ﻿using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Web;
+using taskminister.musik.Interface;
 
 namespace taskminister.Hubs
 {
-    public class Global
-    {
-        public static int conta = 10;
-    }
-
-    [HubName("musikHub")]
     public class HubMusik : Hub
     {
-        [HubMethodName("musikUpload")]
-        public void UploadTask()
-        {
-            taskagoraOne();
+        public IServMusik servMusik;
+        public HubMusik(IServMusik _servMusik) {
+            servMusik = _servMusik;
         }
 
-        public void taskagoraOne()
+        public void MusikUpload()
         {
-            var task = Task.Factory.StartNew(() =>
-            {
-                for (int i = 0; i < 20; i++)
-                {
-                    Global.conta = i;
-                    Clients.All.progresso(Global.conta);
-                    Thread.Sleep(1000);
-                }
-                Clients.All.finalizada();
-            });
-        }
+            Clients.All.progressbarbegin();
 
-        //[HubMethodName("retornastatus")]
-        //public void retornaTarefa()
-        //{
-        //    taskagoraOne();
-        //}
+            while (servMusik.TaskInformation() == false) {
+                //Clients.All.progresso(servMusik.TaskProgresso());
+                //Clients.All.size(servMusik.TaskSize());
+                Clients.All.progressbarupdate(servMusik.TaskProgresso(), servMusik.TaskSize());
+            }
+            //Clients.All.finalizada();
+            Clients.All.progressbarend();
+        }
 
     }
+    //Debug.WriteLine("isCompleted " + servMusik.TaskInformation());
 }

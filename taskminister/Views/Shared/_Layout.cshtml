@@ -9,41 +9,33 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">
+    @*<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mochiy+Pop+One&display=swap" rel="stylesheet">*@
 
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/layout")
 </head>
 <body>
-    <div class="navbar navbar-default navbar-fixed-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <img src="~/Content/img/logo/logo.jpg">            
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Musik", "MasterIndex", "Musik")</li>
-                    
-                </ul>
-            </div>
-        </div>
-    </div>
-    
-    <div class="container body-content">
-        @RenderBody()
+
+    <div class="taskminister-bar">
+        <img src="~/Content/img/logo/logo.jpg">
+        <div class="tmbar-links">@Html.ActionLink("Home", "Index", "Home")</div>
+        <div class="tmbar-links">@Html.ActionLink("About", "About", "Home")</div>
+        <div class="tmbar-links">@Html.ActionLink("Contact", "Contact", "Home")</div>
+        <div class="tmbar-links">@Html.ActionLink("Musik", "MasterIndex", "Musik")</div>
     </div>
 
+        <div class="container body-content">
+            @RenderBody()
+        </div>
+
     <div class="footer-new">
-        &copy; 2022 - Created: 05.03.2022 - Last update: 11.07.2022
+        &copy; 2022 - Created: 05.03.2022 - Last update: 16.07.2022
     </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
-    
-    
+
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

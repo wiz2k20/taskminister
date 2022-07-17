@@ -22,14 +22,15 @@ using System.Diagnostics;
 namespace taskminister.Controllers
 {
     //[Route("api/FileAPI/UploadFiles")]
-    public class Global
-    {
-        //public static int conta = 10;
-        public static int barStatus = 0;
-        public static long barKB = 0;
-        public static bool checkInsert = false;
-        public static long totalKB = 0;
-    }
+    
+    //public class Global
+    //{
+    //    //public static int conta = 10;
+    //    public static int barStatus = 0;
+    //    public static long barKB = 0;
+    //    public static bool checkInsert = false;
+    //    public static long totalKB = 0;
+    //}
 
     public class MusikController : OneAboveAll
     {
@@ -84,101 +85,41 @@ namespace taskminister.Controllers
             }
         }
 
-        [HttpGet]
-        public ActionResult UploadFile()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult UploadFile(HttpPostedFileBase file)
-        {
-            try
-            {
-                if (file.ContentLength > 0)
-                {
-                    string _FileName = Path.GetFileName(file.FileName);
-                    string _path = Path.Combine(Server.MapPath("~/Files/Songs"), _FileName);
-                    file.SaveAs(_path);
-                }
-                ViewBag.Message = "File Uploaded Successfully!!";
-                return View();
-            }
-            catch
-            {
-                ViewBag.Message = "File upload failed!!";
-                return View();
-            }
-        }
+        //[HttpPost]
+        //public ActionResult UploadFile(HttpPostedFileBase file)
+        //{
+        //    try
+        //    {
+        //        if (file.ContentLength > 0)
+        //        {
+        //            string _FileName = Path.GetFileName(file.FileName);
+        //            string _path = Path.Combine(Server.MapPath("~/Files/Songs"), _FileName);
+        //            file.SaveAs(_path);
+        //        }
+        //        ViewBag.Message = "File Uploaded Successfully!!";
+        //        return View();
+        //    }
+        //    catch
+        //    {
+        //        ViewBag.Message = "File upload failed!!";
+        //        return View();
+        //    }
+        //}
 
         
         [HttpPost]
-        public void UploadMusik(HttpPostedFileBase file, string xName, string xArtist)
+        public void UploadMusik(HttpPostedFileBase file, string name, string artist)
         {
-            Debug.WriteLine("ENTROU NO MÉTODO");
+            Debug.WriteLine("ENTROU NO MÉTODO __ " + DateTime.Now);
 
-            Global.barStatus = 0;
-            Global.barKB = 0;
-            Global.checkInsert = false;
-            Global.totalKB = 0;
-
-            if (file != null)
-            {
-                var urlBeginSong = "../../songs/";
-                var urlBeginCover = "../../covers/";
-                var onlyExt = Path.GetExtension(file.FileName);
-
-                if (onlyExt == ".mp3")
-                {
-                    var noExt = Path.GetFileNameWithoutExtension(file.FileName);
-                    noExt = Regex.Replace(noExt, @"[^\w]", "_");
-                    var fileFullName = noExt + onlyExt;
-
-                    var songUrl = urlBeginSong + fileFullName;
-                    var coverUrl = urlBeginCover + "cover.jpg";
-
-                    long totalBytes = file.ContentLength;
-                    Global.totalKB = totalBytes / 1024;
-
-                    byte[] buffer = new byte[16 * 1024];
-                    using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(fileFullName)))
-                    {
-                        using (Stream input = file.InputStream)
-                        {
-                            long totalReadBytes = 0;
-                            int readBytes;
-
-                            while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)
-                            {
-                                output.WriteAsync(buffer, 0, readBytes);
-                                totalReadBytes += readBytes;
-                                Global.barKB = totalReadBytes / 1024;
-                                Debug.WriteLine("Global.barKB: " + Global.barKB);
-                                Global.barStatus = (int)((float)totalReadBytes / (float)totalBytes * 100.0);
-                                Debug.WriteLine("Global.barStatus: " + Global.barStatus);
-                                Task.Delay(1000);
-                            }
-                        }
-                    }
-                    //var queryPlayInsert = RepoSQL.PlaylistInsert();
-                    //Global.checkInsert = SQLPlaylistInsert(queryPlayInsert, xname, xartist, songUrl, coverUrl);
-
-                } //end if
-            } //end if
-
-            //return Json(new { dbInsert = Global.checkInsert, infoSize = Global.totalKB });
+            servMusik.UploadMusikTask(file, name, artist);
         }
 
-        private string GetPathAndFilename(string filename)
-        {
-            // D:\_ARQUIVOS_MEGA\___DEVELOPER\_taskminister\taskminister\taskminister\Content
-            string path = HostingEnvironment.ApplicationPhysicalPath + "\\Files\\Songs\\";
-
-            if (!Directory.Exists(path))
-                Directory.CreateDirectory(path);
-
-            return path + filename;
-        }
+        //[HttpGet]
+        //public ActionResult UploadMusik()
+        //{
+        //    return View();
+        //}
 
         //public ActionResult PlaylistRemove(int id)
         //{
@@ -194,8 +135,6 @@ namespace taskminister.Controllers
         //    // return this.Content(Startup.Progress.ToString());
         //    return new ObjectResult(new { status = Startup.barStatus.ToString(), kbytes = Startup.barKB.ToString() });
         //}
-
-
 
     }
 }
