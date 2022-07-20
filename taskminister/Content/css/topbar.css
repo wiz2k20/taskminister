@@ -2,21 +2,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
-    background-color: lightgreen;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    background-color: white;
+    
+    /*margin-bottom: 15px;*/
+    height: 55px;
 
-    margin-bottom: 15px;
-
-
-    /*border-width: 0 0 1px;*/
+    border-bottom: 1px solid gray;
 }
 
 .tmbar-links {
-
+    font-size: 16px;
+    font-weight: bold;
+    color: #808B96;
     padding-right: 20px;
     padding-left: 20px;
-    
+}
+
+.tmbar-logo {
+    padding-right: 30px;
 }
 

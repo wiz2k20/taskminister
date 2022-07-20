@@ -1,9 +1,36 @@
 ﻿body {
     background-image: url("../../img/wp/wall_city_low.jpg");
+    /*background-color: black;*/
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100%;
+    margin: 0;
+}
+
+.bodyContent {
+    width: 70%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 55px;
+    padding-bottom: 30px;
+    padding-right: 15px;
+    padding-left: 15px;
+}
+
+.bodyContent-bg {
+    width: 100%;
+    height: auto;
+    padding-top: 55px;
+    padding-bottom: 30px;
+    
+    background-image: url("../../img/wp/wall_city_low.jpg");
     background-color: black;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: orange;
 }
 
 .infoBox {
@@ -21,8 +48,6 @@
     color: yellow;
     background-color: transparent;
 }
-
-
 
 /* video {
   object-fit: cover;

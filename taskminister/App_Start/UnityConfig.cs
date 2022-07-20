@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System;
 using IConnection = taskminister.security.Database.IConnection;
 using taskminister.Hubs;
-using Unity.Injection;
 
 namespace taskminister
 {
@@ -35,7 +34,6 @@ namespace taskminister
 
             // taskminister.security
             container.RegisterType<IConnection, Connection>();
-            //container.RegisterType<ISomeInterface, SomeInterface>();
 
             // hub
             container.RegisterFactory<HubMusik>(CreateMyHub);
@@ -65,7 +63,6 @@ namespace taskminister
         private static object CreateMyHub(IUnityContainer p)
         {
             var myHub = new HubMusik(p.Resolve<IServMusik>());
-
             return myHub;
         }
 

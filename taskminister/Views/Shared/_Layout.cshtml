@@ -17,16 +17,16 @@
 <body>
 
     <div class="taskminister-bar">
-        <img src="~/Content/img/logo/logo.jpg">
+        <div class="tmbar-logo"><img src="~/Content/img/logo/logo.jpg"></div>
         <div class="tmbar-links">@Html.ActionLink("Home", "Index", "Home")</div>
         <div class="tmbar-links">@Html.ActionLink("About", "About", "Home")</div>
         <div class="tmbar-links">@Html.ActionLink("Contact", "Contact", "Home")</div>
         <div class="tmbar-links">@Html.ActionLink("Musik", "MasterIndex", "Musik")</div>
     </div>
 
-        <div class="container body-content">
-            @RenderBody()
-        </div>
+    <div class="bodyContent">
+        @RenderBody()
+    </div>
 
     <div class="footer-new">
         &copy; 2022 - Created: 05.03.2022 - Last update: 16.07.2022
@@ -37,5 +37,6 @@
 
 
     @RenderSection("scripts", required: false)
+
 </body>
 </html>

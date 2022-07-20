@@ -11,6 +11,7 @@ using System.Web.Hosting;
 using taskminister.musik.Entity;
 using taskminister.musik.Interface;
 
+
 namespace taskminister.musik.Service
 {
     public class Global
@@ -29,15 +30,20 @@ namespace taskminister.musik.Service
             this.repoMusik = _repoMusik;
         }
 
-        public List<Information> SQLPlaylist()
+        public List<Information> ListOfSongs()
         {
             var tmp = new List<Information>();
-            tmp = repoMusik.SQLPlaylist();
+            tmp = repoMusik.ListOfSongs();
             return tmp;
         }
+
+
+        #region Upload Musik
+
         public void UploadMusikTask(HttpPostedFileBase file, string name, string artist)
         {
-            if (file != null) {
+            if (file != null)
+            {
                 //var task = Task.Factory.StartNew(() =>
                 Global.taskInfo = Task.Factory.StartNew(() =>
                 {
@@ -45,7 +51,8 @@ namespace taskminister.musik.Service
                     var urlBeginCover = "../../covers/";
                     var onlyExt = Path.GetExtension(file.FileName);
 
-                    if (onlyExt == ".mp3") {
+                    if (onlyExt == ".mp3")
+                    {
                         var noExt = Path.GetFileNameWithoutExtension(file.FileName);
                         noExt = Regex.Replace(noExt, @"[^\w]", "_");
                         var fileFullName = noExt + onlyExt;
@@ -57,12 +64,15 @@ namespace taskminister.musik.Service
                         Global.totalKB = totalBytes / 1024;
 
                         byte[] buffer = new byte[16 * 1024];
-                        using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(fileFullName))) {
-                            using (Stream input = file.InputStream) {
+                        using (FileStream output = System.IO.File.Create(this.GetPathAndFilename(fileFullName)))
+                        {
+                            using (Stream input = file.InputStream)
+                            {
                                 long totalReadBytes = 0;
                                 int readBytes;
 
-                                while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0) {
+                                while ((readBytes = input.Read(buffer, 0, buffer.Length)) > 0)
+                                {
                                     output.WriteAsync(buffer, 0, readBytes);
                                     totalReadBytes += readBytes;
                                     Global.barKB = totalReadBytes / 1024;
@@ -87,7 +97,6 @@ namespace taskminister.musik.Service
             }
             return false;
         }
-
         public int TaskProgresso()
         {
             return Global.barStatus;
@@ -96,14 +105,14 @@ namespace taskminister.musik.Service
         {
             return Global.barKB;
         }
-
         private string GetPathAndFilename(string filename)
         {
             string path = HostingEnvironment.ApplicationPhysicalPath + "\\Files\\Songs\\";
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-
             return path + filename;
         }
+
+        #endregion
 
     }
 }

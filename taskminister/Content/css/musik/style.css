@@ -1,9 +1,22 @@
 ﻿body {
     background-image: url("../../img/wp/wall_car_low.jpg");
+    /*background-color: black;*/
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+bodyContent-bg {
+    width: 100%;
+    height: auto;
+    padding-top: 55px;
+    padding-bottom: 30px;
+    background-image: url("../../img/wp/wall_city_low.jpg");
     background-color: black;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-color: orange;
 }
 
 .playlistInfo-btn {

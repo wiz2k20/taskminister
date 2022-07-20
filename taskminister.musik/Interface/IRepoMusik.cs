@@ -7,6 +7,6 @@ namespace taskminister.musik.Interface
 {
     public interface IRepoMusik
     {
-        List<Information> SQLPlaylist();
+        List<Information> ListOfSongs();
     }
 }

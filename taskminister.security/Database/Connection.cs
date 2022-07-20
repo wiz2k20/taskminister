@@ -1,5 +1,5 @@
-﻿using System.Configuration;
-using MySql.Data.MySqlClient;
+﻿using MySql.Data.MySqlClient;
+using System.Configuration;
 
 namespace taskminister.security.Database
 {
@@ -9,5 +9,11 @@ namespace taskminister.security.Database
         {
             return new MySqlConnection(ConfigurationManager.ConnectionStrings["keeper"].ConnectionString);
         }
+
+        public string keeperDependency()
+        {
+            return ConfigurationManager.ConnectionStrings["keeper"].ConnectionString;
+        }
+
     }
 }

@@ -1,133 +1,96 @@
 ﻿
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.js"></script>
+@Html.Hidden("Get", Url.Action("Get", "Customer"))
 
-    @Styles.Render("~/stylemusik")
+@*<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/aplayer@1.10.0/dist/APlayer.min.js"></script>*@
 
-</head>
+@Styles.Render("~/stylemusik")
+
 
 @* FIX:
     - remove delay upload
     - get playlist info btn: disable on click OR clear table on click
     - Clear div status quando finalizar upload *@
 
-<body>
 
-    <div class="title-flex">
-        <input type="button" id="getInfoBtn" class="getInfoBtn" onclick="PlaylistInfo();" value="get playlist info" />
-        <div class="title-view-bg">playlist</div>
+<div class="title-flex">
+    <input type="button" id="getInfoBtn" class="getInfoBtn" onclick="PlaylistInfo();" value="get playlist info" />
+    <div class="title-view-bg">playlist</div>
+</div>
+
+<div class="playlist-flex">
+    <div class="playlistInfo-box" id="playlistInfo-box">
+        <table id="playlistInfo" class="playlistInfo">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Artist</th>
+                    <th>Tools</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <br>
+        <span id="resultRemove" style="color: white;"></span>
     </div>
 
-    <div class="playlist-flex">
-        <div class="playlistInfo-box" id="playlistInfo-box">
-            <table id="playlistInfo" class="playlistInfo">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Artist</th>
-                        <th>Tools</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <br>
-            <span id="resultRemove" style="color: white;"></span>
-        </div>
+    <div class="playlist" id="aplayer2"></div>
+</div>
 
-        <div class="playlist" id="aplayer2"></div>
+<div class="form-musik">
+    <div class="pLabelBox musik-margin">
+        <div id="pLabel" class="pLabel"></div>
     </div>
+    <input type="text" class="form-musik-main musik-margin" id="AddName">
+    <input type="text" class="form-musik-main musik-margin" id="AddArtist">
+    <input type="file" class="upFile" id="AddFile" />
+    <input type="button" class="upFileSend" id="btnUploadZ" value="upload musik" onclick="uploadFiles('AddFile');" />
+</div>
 
-    <div class="form-musik">
-        <div class="pLabelBox musik-margin">
-            <div id="pLabel" class="pLabel"></div>
-        </div>
-        <input type="text" class="form-musik-main musik-margin" id="AddName">
-        <input type="text" class="form-musik-main musik-margin" id="AddArtist">
-        <input type="file" class="upFile" id="AddFile" />
-        <input type="button" class="upFileSend" id="btnUploadZ" value="upload musik" onclick="uploadFiles('AddFile');" />
-    </div>
-
-    <div class="upLogBox">
+@*<div class="upLogBox">
         <textarea class="upLog" id="logUpload" rows="10" readonly></textarea>
-    </div>
+    </div>*@
 
 
-    @section Scripts{
-        <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
-        <script src="~/signalr/hubs"></script>
-        <script src="~/Content/js/musik/signalR.js"></script>
-        <script>
+@section Scripts{
+    <script src="~/Scripts/jquery.signalR-2.4.3.min.js"></script>
+    <script src="~/signalr/hubs"></script>
+    <script src="~/Content/js/musik/signalR.js"></script>
+    <script>
 
-                //  PENDENTE
-                //function Playlist() {
-                //    $.ajax({
-                //        type: "POST",
-                //        url: "/Musik/GetPlaylist",
-                //        //url: "/Musik/SQLPlaylist",
-                //        //async: true,
-                //        success: function (data) {
-                //            const app = new APlayer({
-                //                container: document.getElementById('aplayer2'),
-                //                autoplay: true,
-                //                volume: 0.3,
-                //                mutex: true,
-                //                audio: data,
-                //            });
-                //        }
-                //    });
-                //};
-                //Playlist();
+            //function getData() {
+            //    $.ajax({
+            //        type: "GET",
+            //        //url: "/Musik/GetPlaylistInfo",
+            //        url: $("#Get").val(),
+            //        //data: { get_param: 'value' },
+            //        //dataType: 'json',
+            //        success: function (data) {
+            //            var parsedData = JSON.parse(data);
+            //            console.log(parsedData);
 
-                //function PlaylistInfo() {
-                //    $.ajax({
-                //        type: "GET",
-                //        url: "/Musik/GetPlaylistInfo",
-                //        //data: { get_param: 'value' },
-                //        //dataType: 'json',
-                //        success: function (data) {
-                //            var parsedData = JSON.parse(data);
-                //            console.log(parsedData);
+            //            $('#getInfoBtn').prop('disabled', 'true');
+            //            $('#getInfoBtn').unbind('click');
 
-                //            $('#getInfoBtn').prop('disabled', 'true');
-                //            $('#getInfoBtn').unbind('click');
+            //            $('#playlistInfo-box').css('visibility', 'visible');
 
-                //            $('#playlistInfo-box').css('visibility', 'visible');
+            //            $.each(parsedData, function (index, element) {
 
-                //            $.each(parsedData, function (index, element) {
+            //                //console.log(element.name);
 
-                //                //console.log(element.name);
+            //                var markup = "<tr>" +
+            //                    "<td>" + element.Name + "</td><td>" + element.Artist + "</td>" +
+            //                    "<td><a href='javascript:PlaylistRemove(" + element.Control + ");'>X</a></td>" +
+            //                    "</tr>";
+            //                $('#playlistInfo tbody').append(markup);
+            //            });
+            //        }
+            //    });
+            //};
 
-                //                var markup = "<tr>" +
-                //                    "<td>" + element.Name + "</td><td>" + element.Artist + "</td>" +
-                //                    "<td><a href='javascript:PlaylistRemove(" + element.Control + ");'>X</a></td>" +
-                //                    "</tr>";
-                //                $('#playlistInfo tbody').append(markup);
-                //            });
-                //        }
-                //    });
-                //};
+    </script>
+}
 
-                // PENDENTE
-                //function PlaylistRemove(id) {
-                //    $.ajax({
-                //        type: "POST",
-                //        url: "/Musik/PlaylistRemove",
-                //        data: { id: id },
-                //        success: function (data) {
-                //            //console.log(data.ajax);
-                //            var yeOkey = "A música com o ID " + id + " foi removida!";
-                //            var noOkey = "Nenhuma música foi removida!";
-                //            if (data.jax != "0") { $('#resultRemove').html(yeOkey); }
-                //            else { $('#resultRemove').html(noOkey); }
-                //        }
-                //    });
-                //};
+@Scripts.Render("~/scriptmusik")
 
-        </script>
-    }
-
-    @Scripts.Render("~/scriptmusik")
-
-</body>

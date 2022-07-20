@@ -107,7 +107,6 @@
     <Reference Include="System.Security" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
-      <SpecificVersion>False</SpecificVersion>
     </Reference>
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
@@ -196,6 +195,8 @@
     <Content Include="Content\css\home\home.css" />
     <Content Include="Content\css\musik\style.css" />
     <Content Include="Content\css\topbar.css" />
+    <Content Include="Content\js\musik\APlayer.js" />
+    <Content Include="Content\js\musik\PlaylistRemove.js" />
     <Content Include="Content\js\musik\signalR.js" />
     <Content Include="Files\bkp.txt" />
     <Compile Include="Global.asax.cs">
@@ -216,7 +217,6 @@
     <Content Include="Files\bkp2.txt" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="libman.json" />

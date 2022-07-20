@@ -7,11 +7,15 @@ namespace taskminister.musik.Interface
 {
     public interface IServMusik
     {
-        List<Information> SQLPlaylist();
+        List<Information> ListOfSongs();
+
+
+        #region Upload
         void UploadMusikTask(HttpPostedFileBase file, string name, string artist);
         int TaskProgresso();
         bool TaskInformation();
         long TaskSize();
+        #endregion
 
     }
 }
